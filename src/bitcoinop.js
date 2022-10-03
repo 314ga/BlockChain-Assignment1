@@ -11,9 +11,23 @@ export const checkBalance = async () => {
 export const createAddress = async () => {
   return api.get("createAddress");
 };
-export const sendToAddress = async () => {
-  return api.get("sendToAddress");
+export const sendToAddress = async (
+  address,
+  value,
+  coment,
+  organizationComment
+) => {
+  const data = {
+    address: address,
+    value: value,
+    comment: coment,
+    organizationcomment: organizationComment,
+  };
+  return api.post("sendToAddress", data);
 };
 export const listUnspent = async () => {
   return api.get("listUnspent");
+};
+export const listAddresses = async () => {
+  return api.get("listAddresses");
 };

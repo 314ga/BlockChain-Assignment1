@@ -69,7 +69,7 @@ router.get("/createAddress", (req, res) => {
     "comment": "comment test",
     "organizationcomment": "comment org"
 } */
-router.get("/sendToAddress", (req, res) => {
+router.post("/sendToAddress", (req, res) => {
   //var keys = Object.keys(req.body);
   //console.log(req.body.address);
   var dataString =
@@ -119,6 +119,23 @@ router.get("/sendToAddress", (req, res) => {
          */
 router.get("/listUnspent", (req, res) => {
   var dataString = `{"jsonrpc":"1.0","id":"curltext","method":"listunspent","params":[]}`;
+  var options = {
+    url: `http://${USER}:${PASS}@127.0.0.1:4444/`,
+    method: "POST",
+    headers: headers,
+    body: dataString,
+  };
+
+  callback = (error, response, body) => {
+    if (!error && response.statusCode == 200) {
+      const data = JSON.parse(body);
+      res.send(data);
+    }
+  };
+  request(options, callback);
+});
+router.get("/listAddresses", (req, res) => {
+  var dataString = `{"jsonrpc":"1.0","id":"curltext","method":"listaddressgroupings","params":[]}`;
   var options = {
     url: `http://${USER}:${PASS}@127.0.0.1:4444/`,
     method: "POST",
